@@ -1,0 +1,29 @@
+fastapi
+uvicorn
+python-multipart
+google-generativeai
+PyPDF2
+python-docx
+pandas
+Jinja2
+aiofiles
+
+# YouTube functionality dependencies
+yt-dlp
+youtube-transcript-api
+
+# Document Q&A dependencies
+langchain
+langchain-google-genai
+langchain-community
+faiss-cpu
+sentence-transformers
+beautifulsoup4
+pdfplumber
+easyocr
+playwright
+rank-bm25
+python-dotenv
+pillow
+numpy
+
