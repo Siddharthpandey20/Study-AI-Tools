@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Study Tool - AI-Powered Learning</title>
+    <title>StudyAI - AI-Powered Learning Platform</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Global Reset and Variables */
         * {
             margin: 0;
             padding: 0;
@@ -14,42 +15,51 @@
         }
 
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #ec4899;
-            --accent: #06d6a0;
+            --primary: #5b21b6; /* Softer purple for modern aesthetic */
+            --primary-dark: #4c1d95;
+            --secondary: #f472b6; /* Vibrant pink for contrast */
+            --accent: #34d399; /* Emerald green for highlights */
             --warning: #f59e0b;
             --danger: #ef4444;
             --success: #10b981;
-            --dark: #1e293b;
+            --dark: #0f172a; /* Slate for text and dark elements */
             --light: #f8fafc;
-            --gradient: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
-            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --glass: rgba(255, 255, 255, 0.1);
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --glass: rgba(255, 255, 255, 0.15);
+            --transition: all 0.3s ease;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(145deg, #6d28d9 0%, #ec4899 100%);
             min-height: 100vh;
             color: var(--dark);
             overflow-x: hidden;
+            transition: background-color 0.5s ease;
         }
 
-        /* Header */
+        body.dark-mode {
+            background: linear-gradient(145deg, #1e293b 0%, #334155 100%);
+            color: #e2e8f0;
+        }
+
+        /* Header Styles */
         .header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            transition: var(--transition);
         }
 
         .nav {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -58,32 +68,65 @@
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
             color: white;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .nav-links {
             display: flex;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-link {
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.3s ease;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
         }
 
         .nav-link:hover {
             color: var(--accent);
-            transform: translateY(-2px);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            color: var(--accent);
         }
 
         /* Main Container */
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
             padding: 8rem 2rem 2rem;
         }
@@ -91,144 +134,181 @@
         /* Hero Section */
         .hero {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
+            animation: fadeIn 1s ease-out;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
+            font-family: 'Poppins', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
             color: white;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #fff 0%, #a5f3fc 100%);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #a5f3fc 100%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.8);
-            max-width: 600px;
-            margin: 0 auto 2rem;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero .btn-primary {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .hero .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
         }
 
         /* Upload Section */
         .upload-section {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 4rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: var(--transition);
         }
 
         .upload-area {
             border: 2px dashed rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 3rem;
+            border-radius: 16px;
+            padding: 3.5rem;
             text-align: center;
-            transition: all 0.3s ease;
             cursor: pointer;
+            transition: var(--transition);
         }
 
         .upload-area:hover {
             border-color: var(--accent);
             background: rgba(255, 255, 255, 0.05);
+            transform: scale(1.01);
         }
 
         .upload-icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: var(--accent);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
         }
 
         .upload-text {
             color: white;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+            font-weight: 500;
             margin-bottom: 1rem;
+        }
+
+        .upload-info {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.95rem;
+        }
+
+        .text-input {
+            width: 100%;
+            height: 140px;
+            padding: 1.2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            transition: var(--transition);
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         /* Feature Cards */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
         }
 
         .feature-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
+            background: var(--glass);
+            backdrop-filter: blur(12px);
             border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: var(--transition);
             cursor: pointer;
             position: relative;
             overflow: hidden;
         }
 
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .feature-card:hover::before {
-            left: 100%;
-        }
-
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
         }
 
         .feature-title {
-            font-size: 1.3rem;
-            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 600;
             color: white;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
         }
 
         .feature-description {
             color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 0.95rem;
         }
 
         /* Specific Feature Colors */
-        .flashcard-card .feature-icon { color: #ff6b6b; }
-        .mindmap-card .feature-icon { color: #4ecdc4; }
-        .learning-card .feature-icon { color: #ffe66d; }
-        .sticky-card .feature-icon { color: #ff8b94; }
-        .exam-card .feature-icon { color: #95e1d3; }
-        .doc-qna-card .feature-icon { color: #8b5cf6; }
+        .flashcard-card .feature-icon { color: #f87171; }
+        .mindmap-card .feature-icon { color: #2dd4bf; }
+        .learning-card .feature-icon { color: #facc15; }
+        .sticky-card .feature-icon { color: #fb7185; }
+        .exam-card .feature-icon { color: #34d399; }
+        .youtube-card .feature-icon { color: #ff0000; }
+        .doc-qna-card .feature-icon { color: #a78bfa; }
 
         /* Results Section */
         .results-section {
             display: none;
-            margin-top: 3rem;
+            margin-top: 4rem;
         }
 
-        /* MCQ Quiz Interface */
+        /* Quiz Interface */
         .quiz-container {
-            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-            border-radius: 25px;
+            background: white;
+            border-radius: 20px;
             padding: 3rem;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-            max-width: 900px;
-            margin: 0 auto 2rem;
-            border: 1px solid rgba(99, 102, 241, 0.1);
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2.5rem;
+            max-width: 960px;
+            margin: 0 auto 2.5rem;
+            transition: var(--transition);
         }
 
         .question-card {
@@ -237,18 +317,18 @@
         }
 
         .question-number {
-            display: inline-block;
             background: var(--gradient);
             color: white;
-            padding: 0.5rem 1rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 20px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 600;
             margin-bottom: 1.5rem;
+            display: inline-block;
         }
 
         .question-text {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 600;
             color: var(--dark);
             margin-bottom: 2.5rem;
@@ -257,104 +337,87 @@
 
         .options-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
         }
 
         .option-btn {
             padding: 1.5rem;
-            border: 3px solid #e2e8f0;
-            border-radius: 20px;
-            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            border: 2px solid #e5e7eb;
+            border-radius: 16px;
+            background: white;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: var(--transition);
             font-weight: 500;
             font-size: 1rem;
+            text-align: left;
             position: relative;
-            overflow: hidden;
-        }
-
-        .option-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .option-btn:hover::before {
-            left: 100%;
         }
 
         .option-btn:hover {
             border-color: var(--primary);
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.2);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-sm);
         }
 
         .option-btn.correct {
-            background: linear-gradient(145deg, #10b981 0%, #059669 100%);
+            background: var(--success);
             color: white;
-            border-color: #10b981;
-            transform: scale(1.05);
-            animation: correctPulse 0.6s ease;
+            border-color: var(--success);
+            transform: scale(1.03);
+            animation: correctPulse 0.5s ease;
         }
 
         .option-btn.incorrect {
-            background: linear-gradient(145deg, #ef4444 0%, #dc2626 100%);
+            background: var(--danger);
             color: white;
-            border-color: #ef4444;
-            animation: incorrectShake 0.6s ease;
+            border-color: var(--danger);
+            animation: incorrectShake 0.5s ease;
         }
 
         @keyframes correctPulse {
-            0%, 100% { transform: scale(1.05); }
-            50% { transform: scale(1.1); }
+            0%, 100% { transform: scale(1.03); }
+            50% { transform: scale(1.08); }
         }
 
         @keyframes incorrectShake {
             0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
         }
 
         .explanation {
-            background: linear-gradient(145deg, #f1f5f9 0%, #e2e8f0 100%);
+            background: #f1f5f9;
             padding: 2rem;
-            border-radius: 20px;
+            border-radius: 16px;
             margin-top: 2rem;
             display: none;
-            border-left: 5px solid var(--primary);
-            animation: slideInUp 0.5s ease;
+            border-left: 4px solid var(--primary);
+            animation: slideIn 0.5s ease;
         }
 
         /* Flashcard Interface */
         .flashcards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            perspective: 1000px;
+            perspective: 1200px;
         }
 
         .flashcard {
             background: white;
-            border-radius: 20px;
-            padding: 0;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            min-height: 250px;
+            transition: var(--transition);
+            min-height: 280px;
             position: relative;
             transform-style: preserve-3d;
-            overflow: hidden;
         }
 
         .flashcard:hover {
-            transform: translateY(-10px) rotateY(5deg);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
         }
 
         .flashcard.flipped {
@@ -368,7 +431,7 @@
             text-align: center;
             transition: transform 0.6s;
             transform-style: preserve-3d;
-            min-height: 250px;
+            min-height: 280px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -388,7 +451,7 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            border-radius: 20px;
+            border-radius: 16px;
         }
 
         .flashcard-back {
@@ -397,20 +460,20 @@
             transform: rotateY(180deg);
         }
 
-        /* Enhanced Mind Map Styles */
+        /* Mind Map Styles */
         .mindmap-container {
             background: white;
             border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            min-height: 600px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
+            min-height: 650px;
             position: relative;
             overflow: hidden;
         }
 
         .mindmap-svg {
             width: 100%;
-            height: 600px;
+            height: 650px;
             position: absolute;
             top: 0;
             left: 0;
@@ -421,79 +484,159 @@
             position: relative;
             z-index: 2;
             width: 100%;
-            height: 600px;
+            height: 650px;
         }
 
         .mindmap-node {
             position: absolute;
             padding: 1rem 1.5rem;
-            border-radius: 15px;
+            border-radius: 12px;
             color: white;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            border: 3px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            min-width: 120px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            min-width: 140px;
             text-align: center;
-            transform-origin: center;
         }
 
         .mindmap-node:hover {
-            transform: scale(1.1) translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            z-index: 10;
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
         }
 
         .mindmap-node.central {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             padding: 1.5rem 2rem;
-            border-width: 4px;
+            border-width: 3px;
             transform: scale(1.1);
         }
 
         .mindmap-node.level-2 {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             padding: 0.8rem 1.2rem;
         }
 
-        /* Enhanced Exam Questions */
+        /* Learning Path Interface (Styling from provided code) */
+        .learning-path {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .learning-step {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .learning-step:hover {
+            transform: translateX(10px);
+        }
+
+        .step-number {
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Sticky Notes Interface (Styling from provided code) */
+        .sticky-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .sticky-note {
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            transform: rotate(-2deg);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .sticky-note:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .sticky-note:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 10;
+        }
+
+        .sticky-note.red {
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+            color: white;
+        }
+
+        .sticky-note.yellow {
+            background: linear-gradient(135deg, #ffd54f, #ffcc02);
+            color: #333;
+        }
+
+        .sticky-note.green {
+            background: linear-gradient(135deg, #66bb6a, #4caf50);
+            color: white;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(-2deg); }
+        }
+
+        /* Exam Questions */
         .exam-questions {
             display: grid;
             gap: 2rem;
         }
 
         .exam-question {
-            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            background: white;
             border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            position: relative;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(99, 102, 241, 0.1);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
         }
 
         .exam-question:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
         }
 
         .question-type-badge {
             position: absolute;
-            top: -15px;
-            right: 30px;
-            padding: 0.7rem 1.5rem;
-            border-radius: 25px;
-            font-size: 0.8rem;
+            top: -12px;
+            right: 24px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 600;
             color: white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-sm);
         }
 
-        .short-answer { background: linear-gradient(145deg, #3b82f6 0%, #2563eb 100%); }
-        .long-answer { background: linear-gradient(145deg, #f59e0b 0%, #d97706 100%); }
-        .hots { background: linear-gradient(145deg, #ef4444 0%, #dc2626 100%); }
+        .short-answer { background: var(--primary); }
+        .long-answer { background: var(--warning); }
+        .hots { background: var(--danger); }
 
         .probability-score {
             display: flex;
@@ -502,55 +645,48 @@
             margin-top: 1.5rem;
             padding: 1rem;
             background: rgba(99, 102, 241, 0.05);
-            border-radius: 15px;
+            border-radius: 12px;
         }
 
         .probability-bar {
             flex: 1;
-            height: 10px;
-            background: #e2e8f0;
-            border-radius: 5px;
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
             overflow: hidden;
-            position: relative;
         }
 
         .probability-fill {
             height: 100%;
-            background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #10b981 100%);
-            transition: width 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border-radius: 5px;
+            background: var(--gradient);
+            transition: width 1s ease;
+            border-radius: 4px;
         }
 
         /* Animations */
-        @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .animate-in {
-            animation: slideInUp 0.6s ease forwards;
+            animation: fadeIn 0.6s ease forwards;
         }
 
         /* Loading States */
         .loading {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
+            width: 24px;
+            height: 24px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
@@ -558,23 +694,33 @@
         }
 
         /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 { font-size: 3rem; }
+            .features-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+            .container { padding: 6rem 1.5rem 2rem; }
+        }
+
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.1rem; }
             .features-grid { grid-template-columns: 1fr; }
             .options-grid { grid-template-columns: 1fr; }
+            .nav-links { gap: 1.5rem; }
             .container { padding: 6rem 1rem 2rem; }
         }
 
         /* Utility Classes */
         .btn {
-            padding: 0.75rem 2rem;
+            padding: 0.8rem 2rem;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .btn-primary {
@@ -584,7 +730,7 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+            box-shadow: var(--shadow-sm);
         }
 
         .text-center { text-align: center; }
@@ -592,89 +738,85 @@
         .mb-2 { margin-bottom: 1rem; }
         .hidden { display: none; }
 
-        /* YouTube Modal Styles */
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            z-index: 2000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
         }
 
         .modal-content {
-            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            background: white;
             margin: 5% auto;
-            padding: 2rem;
+            padding: 2.5rem;
             border-radius: 20px;
             width: 90%;
-            max-width: 600px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            max-width: 640px;
+            box-shadow: var(--shadow-md);
             position: relative;
-            animation: modalSlideIn 0.3s ease;
+            animation: modalFadeIn 0.4s ease;
         }
 
-        @keyframes modalSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .close {
-            color: #aaa;
+            color: #64748b;
             float: right;
-            font-size: 28px;
-            font-weight: bold;
+            font-size: 1.8rem;
+            font-weight: 700;
             cursor: pointer;
-            line-height: 1;
+            transition: var(--transition);
         }
 
         .close:hover {
-            color: #000;
+            color: var(--dark);
         }
 
         .video-input {
             width: 100%;
             padding: 1rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
             font-size: 1rem;
             margin: 1rem 0;
-            transition: border-color 0.3s ease;
+            transition: var(--transition);
         }
 
         .video-input:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(91, 33, 182, 0.1);
         }
 
         .video-preview {
             display: none;
             background: #f8fafc;
-            border-radius: 15px;
+            border-radius: 16px;
             padding: 1.5rem;
             margin: 1rem 0;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #e5e7eb;
         }
 
         .video-thumbnail {
             width: 100%;
-            max-width: 300px;
-            border-radius: 10px;
+            max-width: 320px;
+            border-radius: 12px;
             margin-bottom: 1rem;
         }
 
         .video-info h4 {
             color: var(--dark);
             margin-bottom: 0.5rem;
+            font-size: 1.2rem;
         }
 
         .video-info p {
@@ -682,36 +824,34 @@
             font-size: 0.9rem;
         }
 
-        .youtube-card .feature-icon { color: #ff0000; }
-
         /* Video Summary Styles */
         .video-summary-container {
-            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+            background: white;
             border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 2.5rem;
         }
 
         .video-header {
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
             margin-bottom: 2rem;
-            align-items: start;
+            align-items: flex-start;
         }
 
         .video-thumbnail-large {
-            width: 200px;
-            height: 112px;
+            width: 240px;
+            height: 135px;
             object-fit: cover;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
         }
 
         .video-details h3 {
             color: var(--dark);
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.4rem;
         }
 
         .video-meta {
@@ -723,25 +863,56 @@
         .video-badge {
             background: var(--gradient);
             color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: 600;
         }
 
         .summary-content {
-            background: rgba(99, 102, 241, 0.05);
-            border-radius: 15px;
+            background: rgba(91, 33, 182, 0.05);
+            border-radius: 16px;
             padding: 2rem;
-            border-left: 5px solid var(--primary);
+            border-left: 4px solid var(--primary);
         }
 
         .summary-content h4 {
             color: var(--primary);
             margin-bottom: 1rem;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+        }
+
+        /* Dark Mode Adjustments */
+        body.dark-mode .quiz-container,
+        body.dark-mode .flashcard,
+        body.dark-mode .mindmap-container,
+        body.dark-mode .exam-question,
+        body.dark-mode .video-summary-container,
+        body.dark-mode .modal-content {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .question-text,
+        body.dark-mode .video-details h3,
+        body.dark-mode .flashcard-front div {
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .option-btn,
+        body.dark-mode .flashcard-front {
+            background: #334155;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .explanation,
+        body.dark-mode .video-preview {
+            background: #334155;
+            border-color: #475569;
         }
     </style>
 </head>
@@ -756,6 +927,9 @@
                 <a href="#features" class="nav-link">Features</a>
                 <a href="#about" class="nav-link">About</a>
                 <a href="#contact" class="nav-link">Contact</a>
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
         </nav>
     </header>
@@ -764,8 +938,11 @@
     <div class="container">
         <!-- Hero Section -->
         <section class="hero">
-            <h1>Transform Your Learning with AI</h1>
-            <p>Upload your notes and get instant flashcards, mind maps, learning paths, and smart study materials powered by advanced AI.</p>
+            <h1>Revolutionize Your Learning with AI</h1>
+            <p>Upload your notes or YouTube videos to instantly create flashcards, mind maps, quizzes, and personalized study plans powered by advanced AI.</p>
+            <a href="#features" class="btn btn-primary">
+                <i class="fas fa-rocket"></i> Explore Features
+            </a>
         </section>
 
         <!-- Upload Section -->
@@ -775,17 +952,16 @@
                     <i class="fas fa-cloud-upload-alt"></i>
                 </div>
                 <div class="upload-text">
-                    Drop your files here or click to upload
+                    Drag & Drop or Click to Upload
                 </div>
-                <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">
+                <div class="upload-info">
                     Supports PDF, DOCX, TXT, MD files
                 </div>
             </div>
             <input type="file" id="fileInput" style="display: none;" accept=".pdf,.docx,.txt,.md">
             
-            <div style="margin-top: 2rem;">
-                <textarea id="textInput" placeholder="Or paste your text content here..." 
-                         style="width: 100%; height: 120px; padding: 1rem; border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.1); color: white; font-family: inherit;" rows="5"></textarea>
+            <div class="mt-2">
+                <textarea id="textInput" class="text-input" placeholder="Or paste your text content here..." rows="6"></textarea>
             </div>
         </section>
 
@@ -796,9 +972,9 @@
                 <div class="feature-icon">
                     <i class="fas fa-brain"></i>
                 </div>
-                <h3 class="feature-title">🔥 Smart Revision Mode</h3>
+                <h3 class="feature-title">Smart Revision Mode</h3>
                 <p class="feature-description">
-                    Auto-generate flashcards and interactive MCQ quizzes from your notes. Perfect for quick revision and self-testing with detailed explanations.
+                    Generate interactive flashcards and MCQ quizzes from your notes for efficient revision and self-assessment.
                 </p>
             </div>
 
@@ -807,9 +983,9 @@
                 <div class="feature-icon">
                     <i class="fas fa-project-diagram"></i>
                 </div>
-                <h3 class="feature-title">🧠 Mind Map Generator</h3>
+                <h3 class="feature-title">Mind Map Generator</h3>
                 <p class="feature-description">
-                    Transform your notes into beautiful, interactive mind maps. Visualize connections between concepts with stunning graphics.
+                    Create stunning, interactive mind maps to visualize and connect concepts effortlessly.
                 </p>
             </div>
 
@@ -818,9 +994,9 @@
                 <div class="feature-icon">
                     <i class="fas fa-route"></i>
                 </div>
-                <h3 class="feature-title">🎯 Learning Path Generator</h3>
+                <h3 class="feature-title">Learning Path Generator</h3>
                 <p class="feature-description">
-                    Get a personalized step-by-step study plan extracted from your content. Master topics in the optimal order.
+                    Receive a tailored study plan to master topics in the most effective order.
                 </p>
             </div>
 
@@ -829,9 +1005,9 @@
                 <div class="feature-icon">
                     <i class="fas fa-sticky-note"></i>
                 </div>
-                <h3 class="feature-title">🎨 Smart Sticky Notes</h3>
+                <h3 class="feature-title">Smart Sticky Notes</h3>
                 <p class="feature-description">
-                    AI-powered color-coded notes: Red (Must memorize), Yellow (Good to know), Green (Bonus). Our signature feature!
+                    AI-generated, color-coded notes for critical facts, important concepts, and bonus information.
                 </p>
             </div>
 
@@ -840,9 +1016,9 @@
                 <div class="feature-icon">
                     <i class="fas fa-trophy"></i>
                 </div>
-                <h3 class="feature-title">🔹 Exam Booster Mode</h3>
+                <h3 class="feature-title">Exam Booster Mode</h3>
                 <p class="feature-description">
-                    Predict most likely exam questions with probability scores. Categorized as short answer, long answer, and HOTS questions.
+                    Predict high-probability exam questions with categorized types and probability scores.
                 </p>
             </div>
 
@@ -851,9 +1027,9 @@
                 <div class="feature-icon">
                     <i class="fab fa-youtube"></i>
                 </div>
-                <h3 class="feature-title">📺 YouTube Summarizer</h3>
+                <h3 class="feature-title">YouTube Summarizer</h3>
                 <p class="feature-description">
-                    Get instant AI-powered summaries of YouTube videos. Perfect for educational content, lectures, and tutorials.
+                    Summarize educational YouTube videos instantly and generate study materials from them.
                 </p>
             </div>
 
@@ -862,9 +1038,9 @@
                 <div class="feature-icon">
                     <i class="fas fa-comments"></i>
                 </div>
-                <h3 class="feature-title">💬 Document Q&A</h3>
+                <h3 class="feature-title">Document Q&A</h3>
                 <p class="feature-description">
-                    Upload documents, PDFs, images, audio files, or web links and chat with your content using advanced AI retrieval.
+                    Chat with your uploaded documents, PDFs, or web links using advanced AI retrieval.
                 </p>
             </div>
         </section>
@@ -878,12 +1054,12 @@
     <!-- YouTube Modal -->
     <div id="youtubeModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeYouTubeModal()">&times;</span>
-            <h2 style="color: var(--dark); margin-bottom: 1rem;">
+            <span class="close" onclick="closeYouTubeModal()">×</span>
+            <h2 class="text-center">
                 <i class="fab fa-youtube" style="color: #ff0000;"></i> YouTube Video Summarizer
             </h2>
-            <p style="color: #64748b; margin-bottom: 1.5rem;">
-                Paste a YouTube video URL below to get an AI-powered summary
+            <p class="text-center mb-2" style="color: #64748b;">
+                Paste a YouTube video URL to generate an AI-powered summary
             </p>
             
             <input type="url" id="youtubeUrl" class="video-input" 
@@ -898,7 +1074,7 @@
                 </div>
             </div>
             
-            <div style="text-align: center; margin-top: 1.5rem;">
+            <div class="text-center mt-2">
                 <button class="btn btn-primary" onclick="summarizeVideo()" id="summarizeBtn">
                     <i class="fab fa-youtube"></i> Summarize Video
                 </button>
@@ -907,7 +1083,25 @@
     </div>
 
     <script>
+        // Global state
         let currentContent = '';
+        let isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+        // Initialize theme
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // Theme toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            const icon = document.querySelector('.theme-toggle i');
+            icon.classList.toggle('fa-moon');
+            icon.classList.toggle('fa-sun');
+        }
 
         // File upload handling
         document.getElementById('fileInput').addEventListener('change', function(e) {
@@ -915,7 +1109,7 @@
             if (file) {
                 const fileName = file.name;
                 document.querySelector('.upload-text').textContent = `Selected: ${fileName}`;
-                document.querySelector('.upload-area').style.borderColor = '#06d6a0';
+                document.querySelector('.upload-area').style.borderColor = '#34d399';
             }
         });
 
@@ -929,7 +1123,6 @@
                 return;
             }
 
-            // Show loading state
             showLoading(type);
 
             try {
@@ -941,28 +1134,7 @@
                     formData.append('text', textInput.value.trim());
                 }
 
-                let endpoint = '';
-                switch(type) {
-                    case 'flashcards':
-                        endpoint = '/api/generate-flashcards';
-                        break;
-                    case 'mcqs':
-                        endpoint = '/api/generate-mcqs';
-                        break;
-                    case 'mindmap':
-                        endpoint = '/api/generate-mindmap';
-                        break;
-                    case 'learning-path':
-                        endpoint = '/api/generate-learning-path';
-                        break;
-                    case 'sticky-notes':
-                        endpoint = '/api/generate-sticky-notes';
-                        break;
-                    case 'exam-questions':
-                        endpoint = '/api/generate-exam-questions';
-                        break;
-                }
-
+                const endpoint = `/api/generate-${type}`;
                 const response = await fetch(endpoint, {
                     method: 'POST',
                     body: formData
@@ -987,10 +1159,10 @@
             const resultsSection = document.getElementById('results-section');
             resultsSection.style.display = 'block';
             resultsSection.innerHTML = `
-                <div style="text-align: center; padding: 3rem; background: rgba(255, 255, 255, 0.1); border-radius: 20px; backdrop-filter: blur(20px);">
+                <div class="text-center" style="padding: 3rem; background: var(--glass); border-radius: 20px; backdrop-filter: blur(12px);">
                     <div class="loading" style="margin: 0 auto 1rem;"></div>
-                    <h3 style="color: white; margin-bottom: 0.5rem;">Generating ${type.replace('-', ' ')}...</h3>
-                    <p style="color: rgba(255, 255, 255, 0.7);">Our AI is analyzing your content</p>
+                    <h3 style="color: white;">Generating ${type.replace('-', ' ')}...</h3>
+                    <p style="color: rgba(255, 255, 255, 0.7);">Please wait while our AI processes your content</p>
                 </div>
             `;
             resultsSection.scrollIntoView({ behavior: 'smooth' });
@@ -998,40 +1170,27 @@
 
         // Hide loading state
         function hideLoading() {
-            const resultsSection = document.getElementById('results-section');
-            resultsSection.style.display = 'none';
+            document.getElementById('results-section').style.display = 'none';
         }
 
-        // Display results based on type
+        // Display results
         function displayResults(type, data) {
             const resultsSection = document.getElementById('results-section');
             let html = '';
 
             switch(type) {
-                case 'flashcards':
-                    html = createFlashcardsHTML(data);
-                    break;
-                case 'mcqs':
-                    html = createMCQsHTML(data);
-                    break;
-                case 'mindmap':
-                    html = createMindMapHTML(data);
-                    break;
-                case 'learning-path':
-                    html = createLearningPathHTML(data);
-                    break;
-                case 'sticky-notes':
-                    html = createStickyNotesHTML(data);
-                    break;
-                case 'exam-questions':
-                    html = createExamQuestionsHTML(data);
-                    break;
+                case 'flashcards': html = createFlashcardsHTML(data); break;
+                case 'mcqs': html = createMCQsHTML(data); break;
+                case 'mindmap': html = createMindMapHTML(data); break;
+                case 'learning-path': html = createLearningPathHTML(data); break;
+                case 'sticky-notes': html = createStickyNotesHTML(data); break;
+                case 'exam-questions': html = createExamQuestionsHTML(data); break;
             }
 
             resultsSection.innerHTML = html;
             resultsSection.style.display = 'block';
             
-            // Add animation
+            // Animate results
             setTimeout(() => {
                 resultsSection.querySelectorAll('.animate-in').forEach((el, index) => {
                     setTimeout(() => {
@@ -1045,17 +1204,19 @@
         // Create Flashcards HTML
         function createFlashcardsHTML(flashcards) {
             let html = `
-                <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 20px; padding: 2rem; margin-bottom: 2rem;">
-                    <h2 style="color: white; text-align: center; margin-bottom: 2rem;">
-                        <i class="fas fa-brain" style="color: #ff6b6b;"></i> Smart Flashcards
+                <div style="background: var(--glass); backdrop-filter: blur(12px); border-radius: 20px; padding: 2.5rem;">
+                    <h2 class="text-center" style="color: white; margin-bottom: 2rem;">
+                        <i class="fas fa-brain" style="color: #f87171;"></i> Smart Flashcards
                     </h2>
-                    <p style="color: rgba(255, 255, 255, 0.8); text-align: center; margin-bottom: 2rem;">Click on any card to flip and reveal the answer</p>
+                    <p class="text-center" style="color: rgba(255, 255, 255, 0.8); margin-bottom: 2rem;">
+                        Click cards to flip and reveal answers
+                    </p>
                     <div class="flashcards-grid">
             `;
 
             flashcards.forEach((card, index) => {
                 html += `
-                    <div class="flashcard animate-in" style="opacity: 0; transform: translateY(30px); animation-delay: ${index * 0.1}s;" onclick="flipCard(this)">
+                    <div class="flashcard animate-in" style="opacity: 0; transform: translateY(20px);" onclick="flipCard(this)">
                         <div class="flashcard-inner">
                             <div class="flashcard-front">
                                 <div>
@@ -1082,7 +1243,7 @@
 
             html += `
                     </div>
-                    <div style="text-align: center; margin-top: 3rem;">
+                    <div class="text-center mt-2">
                         <button class="btn btn-primary" onclick="generateContent('mcqs')" style="margin-right: 1rem;">
                             <i class="fas fa-question-circle"></i> Generate Quiz
                         </button>
@@ -1092,22 +1253,21 @@
                     </div>
                 </div>
             `;
-
             return html;
         }
 
         // Create MCQs HTML
         function createMCQsHTML(mcqs) {
             let html = `
-                <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 20px; padding: 2rem;">
-                    <h2 style="color: white; text-align: center; margin-bottom: 2rem;">
-                        <i class="fas fa-question-circle" style="color: #4ecdc4;"></i> Interactive Quiz Challenge
+                <div style="background: var(--glass); backdrop-filter: blur(12px); border-radius: 20px; padding: 2.5rem;">
+                    <h2 class="text-center" style="color: white; margin-bottom: 2rem;">
+                        <i class="fas fa-question-circle" style="color: #2dd4bf;"></i> Interactive Quiz
                     </h2>
             `;
 
             mcqs.forEach((mcq, index) => {
                 html += `
-                    <div class="quiz-container animate-in" style="opacity: 0; transform: translateY(30px); animation-delay: ${index * 0.2}s;">
+                    <div class="quiz-container animate-in" style="opacity: 0; transform: translateY(20px);">
                         <div class="question-card">
                             <div class="question-number">Question ${index + 1} of ${mcqs.length}</div>
                             <div class="question-text">${mcq.question}</div>
@@ -1116,7 +1276,7 @@
 
                 mcq.options.forEach((option, optIndex) => {
                     html += `
-                        <button class="option-btn" onclick="selectAnswer(this, ${optIndex}, ${mcq.correct_answer}, '${mcq.explanation.replace(/'/g, "&apos;")}', ${index})">
+                        <button class="option-btn" onclick="selectAnswer(this, ${optIndex}, ${mcq.correct_answer}, '${mcq.explanation.replace(/'/g, "\\'")}', ${index})">
                             <span style="font-weight: bold; margin-right: 0.5rem;">${String.fromCharCode(65 + optIndex)}.</span>
                             ${option}
                         </button>
@@ -1143,58 +1303,47 @@
         // Create Mind Map HTML
         function createMindMapHTML(mindmap) {
             let html = `
-                <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 20px; padding: 2rem;">
-                    <h2 style="color: white; text-align: center; margin-bottom: 2rem;">
-                        <i class="fas fa-project-diagram" style="color: #ffe66d;"></i> ${mindmap.title}
+                <div style="background: var(--glass); backdrop-filter: blur(12px); border-radius: 20px; padding: 2.5rem;">
+                    <h2 class="text-center" style="color: white; margin-bottom: 2rem;">
+                        <i class="fas fa-project-diagram" style="color: #facc15;"></i> ${mindmap.title}
                     </h2>
-                    <div class="mindmap-container animate-in" style="opacity: 0; transform: translateY(30px);">
-                        <svg class="mindmap-svg" viewBox="0 0 800 600">
-                            <!-- Connections will be drawn here -->
-                        </svg>
+                    <div class="mindmap-container animate-in" style="opacity: 0; transform: translateY(20px);">
+                        <svg class="mindmap-svg" viewBox="0 0 800 650"></svg>
                         <div class="mindmap-content">
+                            <div class="mindmap-node central" style="top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--primary);">
+                                ${mindmap.title}
+                            </div>
             `;
 
-            // Create central node
-            html += `
-                <div class="mindmap-node central" style="top: 50%; left: 50%; transform: translate(-50%, -50%); background: #6366f1; z-index: 10;">
-                    ${mindmap.title}
-                </div>
-            `;
-
-            // Create branch nodes with proper positioning
             if (mindmap.nodes && mindmap.nodes.length > 0) {
                 const centerX = 400;
-                const centerY = 300;
-                const radius = 200;
+                const centerY = 325;
+                const radius = 220;
                 
                 mindmap.nodes.forEach((node, index) => {
                     const angle = (index * 2 * Math.PI) / mindmap.nodes.length;
                     const x = centerX + radius * Math.cos(angle);
                     const y = centerY + radius * Math.sin(angle);
-                    
-                    // Convert to percentage for positioning
                     const xPercent = (x / 800) * 100;
-                    const yPercent = (y / 600) * 100;
+                    const yPercent = (y / 650) * 100;
 
                     html += `
-                        <div class="mindmap-node" style="top: ${yPercent}%; left: ${xPercent}%; background: ${node.color || '#ec4899'}; transform: translate(-50%, -50%);" data-id="${node.id}">
+                        <div class="mindmap-node" style="top: ${yPercent}%; left: ${xPercent}%; background: ${node.color || 'var(--secondary)'}; transform: translate(-50%, -50%);" data-id="${node.id}">
                             ${node.label}
                         </div>
                     `;
 
-                    // Add child nodes
                     if (node.children && node.children.length > 0) {
                         node.children.forEach((child, childIndex) => {
                             const childAngle = angle + ((childIndex - (node.children.length - 1) / 2) * 0.8);
-                            const childRadius = radius + 120;
+                            const childRadius = radius + 140;
                             const childX = centerX + childRadius * Math.cos(childAngle);
                             const childY = centerY + childRadius * Math.sin(childAngle);
-                            
                             const childXPercent = (childX / 800) * 100;
-                            const childYPercent = (childY / 600) * 100;
+                            const childYPercent = (childY / 650) * 100;
 
                             html += `
-                                <div class="mindmap-node level-2" style="top: ${childYPercent}%; left: ${childXPercent}%; background: ${child.color || '#4ecdc4'}; transform: translate(-50%, -50%);" data-id="${child.id}">
+                                <div class="mindmap-node level-2" style="top: ${childYPercent}%; left: ${childXPercent}%; background: ${child.color || '#2dd4bf'}; transform: translate(-50%, -50%);" data-id="${child.id}">
                                     ${child.label}
                                 </div>
                             `;
@@ -1209,23 +1358,18 @@
                 </div>
             `;
 
-            // Add SVG connections after the mindmap is rendered
-            setTimeout(() => {
-                drawMindMapConnections(mindmap);
-            }, 100);
-
+            setTimeout(() => drawMindMapConnections(mindmap), 100);
             return html;
         }
 
-        // Draw SVG connections between nodes
+        // Draw Mind Map Connections
         function drawMindMapConnections(mindmap) {
             const svg = document.querySelector('.mindmap-svg');
             if (!svg) return;
 
             const centerX = 400;
-            const centerY = 300;
-            const radius = 200;
-            
+            const centerY = 325;
+            const radius = 220;
             let connections = '';
 
             if (mindmap.nodes) {
@@ -1234,27 +1378,25 @@
                     const x = centerX + radius * Math.cos(angle);
                     const y = centerY + radius * Math.sin(angle);
 
-                    // Connection from center to main node
                     connections += `
                         <line x1="${centerX}" y1="${centerY}" x2="${x}" y2="${y}" 
-                              stroke="#6366f1" stroke-width="3" opacity="0.7" 
+                              stroke="var(--primary)" stroke-width="3" opacity="0.7" 
                               stroke-dasharray="5,5">
                             <animate attributeName="stroke-dashoffset" 
                                      values="0;-10" dur="1s" repeatCount="indefinite"/>
                         </line>
                     `;
 
-                    // Connections to child nodes
                     if (node.children) {
                         node.children.forEach((child, childIndex) => {
                             const childAngle = angle + ((childIndex - (node.children.length - 1) / 2) * 0.8);
-                            const childRadius = radius + 120;
+                            const childRadius = radius + 140;
                             const childX = centerX + childRadius * Math.cos(childAngle);
                             const childY = centerY + childRadius * Math.sin(childAngle);
 
                             connections += `
                                 <line x1="${x}" y1="${y}" x2="${childX}" y2="${childY}" 
-                                      stroke="${node.color || '#ec4899'}" stroke-width="2" opacity="0.6"/>
+                                      stroke="${node.color || 'var(--secondary)'}" stroke-width="2" opacity="0.6"/>
                             `;
                         });
                     }
@@ -1264,455 +1406,19 @@
             svg.innerHTML = connections;
         }
 
-        // Enhanced functions
-        function flipCard(card) {
-            card.classList.toggle('flipped');
-        }
-
-        function selectAnswer(button, selectedIndex, correctIndex, explanation, questionIndex) {
-            const options = button.parentElement.querySelectorAll('.option-btn');
-            const explanationDiv = document.getElementById(`explanation-${questionIndex}`);
-            
-            options.forEach((option, index) => {
-                option.disabled = true;
-                option.style.pointerEvents = 'none';
-                if (index === correctIndex) {
-                    option.classList.add('correct');
-                } else if (index === selectedIndex && index !== correctIndex) {
-                    option.classList.add('incorrect');
-                }
-            });
-            
-            setTimeout(() => {
-                explanationDiv.style.display = 'block';
-                explanationDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 800);
-        }
-
-        function expandSticky(sticky) {
-            if (sticky.classList.contains('expanded')) {
-                sticky.classList.remove('expanded');
-                sticky.style.transform = sticky.style.transform.replace(' scale(1.2)', '');
-                sticky.style.zIndex = '1';
-            } else {
-                // Collapse other expanded notes
-                document.querySelectorAll('.sticky-note.expanded').forEach(note => {
-                    note.classList.remove('expanded');
-                    note.style.transform = note.style.transform.replace(' scale(1.2)', '');
-                    note.style.zIndex = '1';
-                });
-                
-                sticky.classList.add('expanded');
-                sticky.style.transform += ' scale(1.2)';
-                sticky.style.zIndex = '20';
-            }
-        }
-
-        function shuffleFlashcards() {
-            const container = document.querySelector('.flashcards-grid');
-            const cards = Array.from(container.children);
-            
-            // Shuffle array
-            for (let i = cards.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [cards[i], cards[j]] = [cards[j], cards[i]];
-            }
-            
-            // Re-append in new order with animation
-            cards.forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.1}s`;
-                container.appendChild(card);
-            });
-        }
-
-        function reorganizeNotes() {
-            const container = document.querySelector('.sticky-grid');
-            const notes = Array.from(container.children);
-            
-            // Sort by priority (higher first)
-            notes.sort((a, b) => {
-                const priorityA = parseInt(a.querySelector('.priority-indicator').textContent);
-                const priorityB = parseInt(b.querySelector('.priority-indicator').textContent);
-                return priorityB - priorityA;
-            });
-            
-            // Re-append in new order
-            notes.forEach((note, index) => {
-                note.style.animationDelay = `${index * 0.1}s`;
-                container.appendChild(note);
-            });
-        }
-
-        function downloadStickyNotes() {
-            // Implementation for downloading notes
-            alert('Downloading sticky notes... (Feature coming soon!)');
-        }
-
-        // Initialize animations
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add entrance animations
-            const cards = document.querySelectorAll('.feature-card');
-            cards.forEach((card, index) => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                setTimeout(() => {
-                    card.style.transition = 'all 0.6s ease';
-                    card.style.opacity = '1';
-                    card.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        });
-
-        // YouTube Modal Functions
-        function openYouTubeModal() {
-            document.getElementById('youtubeModal').style.display = 'block';
-            document.getElementById('youtubeUrl').focus();
-        }
-
-        function closeYouTubeModal() {
-            document.getElementById('youtubeModal').style.display = 'none';
-            document.getElementById('youtubeUrl').value = '';
-            document.getElementById('videoPreview').style.display = 'none';
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('youtubeModal');
-            if (event.target === modal) {
-                closeYouTubeModal();
-            }
-        }
-
-        // Preview video function
-        async function previewVideo() {
-            const urlInput = document.getElementById('youtubeUrl');
-            const url = urlInput.value.trim();
-            
-            if (!url) return;
-            
-            try {
-                const videoId = extractVideoId(url);
-                if (!videoId) {
-                    alert('Please enter a valid YouTube URL');
-                    return;
-                }
-                
-                const response = await fetch(`/api/video-info/${videoId}`);
-                if (!response.ok) throw new Error('Failed to fetch video info');
-                
-                const videoInfo = await response.json();
-                
-                // Show preview
-                document.getElementById('videoThumbnail').src = videoInfo.thumbnail;
-                document.getElementById('videoTitle').textContent = videoInfo.title;
-                document.getElementById('videoDetails').textContent = 
-                    `${videoInfo.duration} • ${videoInfo.channel}`;
-                document.getElementById('videoPreview').style.display = 'block';
-                
-            } catch (error) {
-                console.error('Error previewing video:', error);
-            }
-        }
-
-        // Extract video ID from YouTube URL
-        function extractVideoId(url) {
-            const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/;
-            const match = url.match(regex);
-            return match ? match[1] : null;
-        }
-
-        // Summarize video function
-        async function summarizeVideo() {
-            const url = document.getElementById('youtubeUrl').value.trim();
-            
-            if (!url) {
-                alert('Please enter a YouTube URL first');
-                return;
-            }
-            
-            const btn = document.getElementById('summarizeBtn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<div class="loading"></div> Analyzing Video...';
-            btn.disabled = true;
-            
-            try {
-                const response = await fetch('/api/summarize-youtube', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ url: url })
-                });
-                
-                if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.detail || 'Failed to summarize video');
-                }
-                
-                const data = await response.json();
-                closeYouTubeModal();
-                displayVideoSummary(data);
-                
-            } catch (error) {
-                console.error('Error:', error);
-                alert(`Error: ${error.message}`);
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
-        }
-
-        // Display video summary with all study options (FIXED)
-        function displayVideoSummary(data) {
-            const resultsSection = document.getElementById('results-section');
-            
-            // Store the summary in a global variable to avoid encoding issues
-            window.currentVideoSummary = data.summary;
-            
-            const html = `
-                <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 20px; padding: 2rem;">
-                    <h2 style="color: white; text-align: center; margin-bottom: 2rem;">
-                        <i class="fab fa-youtube" style="color: #ff0000;"></i> Video Summary
-                    </h2>
-                    <div class="video-summary-container animate-in" style="opacity: 0; transform: translateY(30px);">
-                        <div class="video-header">
-                            <img src="${data.thumbnail}" alt="Video thumbnail" class="video-thumbnail-large" onerror="this.src='https://img.youtube.com/vi/${data.video_id}/maxresdefault.jpg'">
-                            <div class="video-details">
-                                <h3>${data.title.replace(/'/g, '&#39;').replace(/"/g, '&quot;')}</h3>
-                                <div class="video-meta">
-                                    <span class="video-badge">${data.duration || 'Unknown Duration'}</span>
-                                    <span class="video-badge">Source: ${data.source === 'transcript' ? 'Transcript' : 'Audio Analysis'}</span>
-                                </div>
-                                <p style="color: #64748b; line-height: 1.6;">
-                                    AI-generated summary from ${data.source === 'transcript' ? 'official transcript' : 'audio transcription'}
-                                </p>
-                            </div>
-                        </div>
-                        
-                        <div class="summary-content">
-                            <h4>
-                                <i class="fas fa-file-alt"></i> Summary
-                            </h4>
-                            <div style="line-height: 1.8; color: var(--dark);">
-                                ${data.summary.replace(/\n/g, '<br><br>').replace(/'/g, '&#39;').replace(/"/g, '&quot;')}
-                            </div>
-                        </div>
-                        
-                        <!-- Enhanced Study Tools Section -->
-                        <div style="margin-top: 3rem; background: rgba(99, 102, 241, 0.05); border-radius: 20px; padding: 2rem;">
-                            <h4 style="color: var(--primary); text-align: center; margin-bottom: 2rem;">
-                                <i class="fas fa-graduation-cap"></i> Generate Study Materials from Video
-                            </h4>
-                            
-                            <!-- Study Tools Grid -->
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                                <button class="btn study-tool-btn" 
-                                        style="background: linear-gradient(145deg, #ff6b6b, #ff5252); color: white; padding: 1rem; border-radius: 15px; border: none; cursor: pointer; transition: all 0.3s ease;" 
-                                        onclick="generateFromVideoSummary('flashcards')"
-                                        onmouseover="this.style.transform='translateY(-3px)'"
-                                        onmouseout="this.style.transform='translateY(0)'">
-                                    <i class="fas fa-brain" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
-                                    <span style="font-weight: 600;">Smart Flashcards</span>
-                                </button>
-                                
-                                <button class="btn study-tool-btn" 
-                                        style="background: linear-gradient(145deg, #4ecdc4, #26d0ce); color: white; padding: 1rem; border-radius: 15px; border: none; cursor: pointer; transition: all 0.3s ease;" 
-                                        onclick="generateFromVideoSummary('mcqs')"
-                                        onmouseover="this.style.transform='translateY(-3px)'"
-                                        onmouseout="this.style.transform='translateY(0)'">
-                                    <i class="fas fa-question-circle" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
-                                    <span style="font-weight: 600;">Quiz Generator</span>
-                                </button>
-                                
-                                <button class="btn study-tool-btn" 
-                                        style="background: linear-gradient(145deg, #ffe66d, #ffd93d); color: #333; padding: 1rem; border-radius: 15px; border: none; cursor: pointer; transition: all 0.3s ease;" 
-                                        onclick="generateFromVideoSummary('mindmap')"
-                                        onmouseover="this.style.transform='translateY(-3px)'"
-                                        onmouseout="this.style.transform='translateY(0)'">
-                                    <i class="fas fa-project-diagram" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
-                                    <span style="font-weight: 600;">Mind Map</span>
-                                </button>
-                                
-                                <button class="btn study-tool-btn" 
-                                        style="background: linear-gradient(145deg, #a78bfa, #8b5cf6); color: white; padding: 1rem; border-radius: 15px; border: none; cursor: pointer; transition: all 0.3s ease;" 
-                                        onclick="generateFromVideoSummary('learning-path')"
-                                        onmouseover="this.style.transform='translateY(-3px)'"
-                                        onmouseout="this.style.transform='translateY(0)'">
-                                    <i class="fas fa-route" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
-                                    <span style="font-weight: 600;">Learning Path</span>
-                                </button>
-                                
-                                <button class="btn study-tool-btn" 
-                                        style="background: linear-gradient(145deg, #ff8b94, #ff6b6b); color: white; padding: 1rem; border-radius: 15px; border: none; cursor: pointer; transition: all 0.3s ease;" 
-                                        onclick="generateFromVideoSummary('sticky-notes')"
-                                        onmouseover="this.style.transform='translateY(-3px)'"
-                                        onmouseout="this.style.transform='translateY(0)'">
-                                    <i class="fas fa-sticky-note" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
-                                    <span style="font-weight: 600;">Sticky Notes</span>
-                                </button>
-                                
-                                <button class="btn study-tool-btn" 
-                                        style="background: linear-gradient(145deg, #95e1d3, #66d9ef); color: #333; padding: 1rem; border-radius: 15px; border: none; cursor: pointer; transition: all 0.3s ease;" 
-                                        onclick="generateFromVideoSummary('exam-questions')"
-                                        onmouseover="this.style.transform='translateY(-3px)'"
-                                        onmouseout="this.style.transform='translateY(0)'">
-                                    <i class="fas fa-trophy" style="display: block; font-size: 1.5rem; margin-bottom: 0.5rem;"></i>
-                                    <span style="font-weight: 600;">Exam Booster</span>
-                                </button>
-                            </div>
-                            
-                            <div style="text-align: center; margin-top: 2rem;">
-                                <p style="color: #64748b; font-size: 0.9rem;">
-                                    <i class="fas fa-magic" style="color: var(--primary);"></i> 
-                                    Click any tool above to generate personalized study materials from this video!
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-            
-            resultsSection.innerHTML = html;
-            resultsSection.style.display = 'block';
-            
-            // Animate in
-            setTimeout(() => {
-                const container = resultsSection.querySelector('.animate-in');
-                if (container) {
-                    container.style.opacity = '1';
-                    container.style.transform = 'translateY(0)';
-                }
-            }, 100);
-            
-            resultsSection.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Enhanced function to generate content from video summary (FIXED)
-        async function generateFromVideoSummary(type) {
-            try {
-                // Get the summary from the global variable
-                const summary = window.currentVideoSummary;
-                
-                if (!summary) {
-                    alert('No video summary available. Please try summarizing the video again.');
-                    return;
-                }
-                
-                console.log(`Generating ${type} from video summary...`);
-                
-                // Clear any existing file input
-                const fileInput = document.getElementById('fileInput');
-                if (fileInput) {
-                    fileInput.value = '';
-                }
-                
-                // Set the summary as text input
-                const textInput = document.getElementById('textInput');
-                if (textInput) {
-                    textInput.value = summary;
-                }
-                
-                // Show loading for the specific type
-                showLoading(type);
-                
-                // Disable all study tool buttons
-                const buttons = document.querySelectorAll('.study-tool-btn');
-                buttons.forEach(btn => {
-                    btn.disabled = true;
-                    btn.style.opacity = '0.6';
-                });
-                
-                // Generate content using the existing function
-                await generateContentFromText(type, summary);
-                
-                // Re-enable buttons
-                buttons.forEach(btn => {
-                    btn.disabled = false;
-                    btn.style.opacity = '1';
-                });
-                
-            } catch (error) {
-                console.error('Error generating from video summary:', error);
-                alert('Error generating study materials. Please try again.');
-                hideLoading();
-                
-                // Re-enable buttons on error
-                const buttons = document.querySelectorAll('.study-tool-btn');
-                buttons.forEach(btn => {
-                    btn.disabled = false;
-                    btn.style.opacity = '1';
-                });
-            }
-        }
-
-        // Enhanced generate content function for video summaries (IMPROVED)
-        async function generateContentFromText(type, text) {
-            try {
-                console.log(`Sending request to generate ${type}...`);
-                
-                const formData = new FormData();
-                formData.append('text', text);
-
-                let endpoint = '';
-                switch(type) {
-                    case 'flashcards':
-                        endpoint = '/api/generate-flashcards';
-                        break;
-                    case 'mcqs':
-                        endpoint = '/api/generate-mcqs';
-                        break;
-                    case 'mindmap':
-                        endpoint = '/api/generate-mindmap';
-                        break;
-                    case 'learning-path':
-                        endpoint = '/api/generate-learning-path';
-                        break;
-                    case 'sticky-notes':
-                        endpoint = '/api/generate-sticky-notes';
-                        break;
-                    case 'exam-questions':
-                        endpoint = '/api/generate-exam-questions';
-                        break;
-                    default:
-                        throw new Error(`Unknown content type: ${type}`);
-                }
-
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.text();
-                    console.error('API Error:', errorData);
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const data = await response.json();
-                console.log(`Successfully generated ${type}:`, data);
-                
-                displayResults(type, data);
-
-            } catch (error) {
-                console.error('Error in generateContentFromText:', error);
-                alert(`An error occurred while generating ${type}. Please try again.`);
-                hideLoading();
-            }
-        }
-
-        // Add missing functions
+        // Create Learning Path HTML (Updated to match provided code)
         function createLearningPathHTML(learningPath) {
             let html = `
-                <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 20px; padding: 2rem;">
-                    <h2 style="color: white; text-align: center; margin-bottom: 2rem;">
-                        <i class="fas fa-route" style="color: #ffe66d;"></i> Your Learning Path
+                <div style="background: var(--glass); backdrop-filter: blur(12px); border-radius: 20px; padding: 2.5rem;">
+                    <h2 class="text-center" style="color: white; margin-bottom: 2rem;">
+                        <i class="fas fa-route" style="color: #facc15;"></i> Your Learning Path
                     </h2>
                     <div class="learning-path">
             `;
 
             learningPath.forEach((step, index) => {
                 html += `
-                    <div class="learning-step animate-in" style="opacity: 0; transform: translateY(30px); animation-delay: ${index * 0.1}s;">
+                    <div class="learning-step animate-in" style="opacity: 0; transform: translateY(30px);">
                         <div class="step-number">${step.step_number}</div>
                         <h3 style="color: #333; margin-bottom: 0.5rem;">${step.title}</h3>
                         <p style="color: #666; margin-bottom: 1rem;">${step.description}</p>
@@ -1738,44 +1444,36 @@
             return html;
         }
 
+        // Create Sticky Notes HTML (Updated to match provided code)
         function createStickyNotesHTML(stickyNotes) {
             let html = `
-                <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 20px; padding: 2rem;">
-                    <h2 style="color: white; text-align: center; margin-bottom: 2rem;">
-                        <i class="fas fa-sticky-note" style="color: #ff8b94;"></i> Smart Sticky Notes 
-                        <span style="font-size: 0.6em; background: linear-gradient(45deg, #ff6b6b, #4ecdc4); padding: 0.3rem 0.8rem; border-radius: 15px; margin-left: 1rem;">USP FEATURE</span>
+                <div style="background: var(--glass); backdrop-filter: blur(12px); border-radius: 20px; padding: 2.5rem;">
+                    <h2 class="text-center" style="color: white; margin-bottom: 2rem;">
+                        <i class="fas fa-sticky-note" style="color: #fb7185;"></i> Smart Sticky Notes
                     </h2>
-                    <div style="text-align: center; margin-bottom: 3rem;">
-                        <div style="display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
-                            <span style="background: linear-gradient(145deg, #ff6b6b, #ff5252); color: white; padding: 0.7rem 1.5rem; border-radius: 25px; font-size: 0.9rem; box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);">
-                                🔴 Must Memorize - Critical Facts
-                            </span>
-                            <span style="background: linear-gradient(145deg, #ffd54f, #ffcc02); color: #333; padding: 0.7rem 1.5rem; border-radius: 25px; font-size: 0.9rem; box-shadow: 0 5px 15px rgba(255, 213, 79, 0.3);">
-                                🟡 Good to Know - Important
-                            </span>
-                            <span style="background: linear-gradient(145deg, #66bb6a, #4caf50); color: white; padding: 0.7rem 1.5rem; border-radius: 25px; font-size: 0.9rem; box-shadow: 0 5px 15px rgba(102, 187, 106, 0.3);">
-                                🟢 Bonus - Extra Info
-                            </span>
-                        </div>
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <span style="background: #ff6b6b; color: white; padding: 0.5rem 1rem; border-radius: 20px; margin: 0 0.5rem; font-size: 0.9rem;">
+                            🔴 Must Memorize
+                        </span>
+                        <span style="background: #ffd54f; color: #333; padding: 0.5rem 1rem; border-radius: 20px; margin: 0 0.5rem; font-size: 0.9rem;">
+                            🟡 Good to Know
+                        </span>
+                        <span style="background: #66bb6a; color: white; padding: 0.5rem 1rem; border-radius: 20px; margin: 0 0.5rem; font-size: 0.9rem;">
+                            🟢 Bonus/Extra
+                        </span>
                     </div>
                     <div class="sticky-grid">
             `;
 
             stickyNotes.forEach((note, index) => {
                 html += `
-                    <div class="sticky-note ${note.category} animate-in" 
-                         style="opacity: 0; transform: translateY(30px); animation-delay: ${index * 0.1}s;" 
-                         onclick="expandSticky(this)">
-                        <div class="priority-indicator">${note.priority}</div>
-                        <div style="font-weight: 600; margin-bottom: 1rem; font-size: 1.1rem;">
-                            ${note.category === 'red' ? '🔥 Critical' : note.category === 'yellow' ? '⭐ Important' : '💡 Bonus'}
+                    <div class="sticky-note ${note.category} animate-in" style="opacity: 0; transform: translateY(30px); animation-delay: ${index * 0.1}s;" onclick="expandSticky(this)">
+                        <div style="font-weight: 600; margin-bottom: 0.5rem;">
+                            Priority: ${note.priority}/10
                         </div>
-                        <div style="line-height: 1.6; margin-bottom: 1rem;">${note.content}</div>
+                        <div>${note.content}</div>
                         <div style="margin-top: 1rem; opacity: 0.8;">
-                            ${note.tags && note.tags.map ? note.tags.map(tag => `<span style="background: rgba(255,255,255,0.2); padding: 0.3rem 0.7rem; border-radius: 15px; font-size: 0.7rem; margin-right: 0.5rem; margin-bottom: 0.5rem; display: inline-block;">#${tag}</span>`).join('') : ''}
-                        </div>
-                        <div style="position: absolute; bottom: 10px; right: 15px; opacity: 0.6; font-size: 0.8rem;">
-                            Click to expand
+                            ${note.tags ? note.tags.map(tag => `<span style="background: rgba(255,255,255,0.2); padding: 0.2rem 0.5rem; border-radius: 10px; font-size: 0.7rem; margin-right: 0.25rem;">#${tag}</span>`).join('') : ''}
                         </div>
                     </div>
                 `;
@@ -1785,15 +1483,15 @@
                     </div>
                 </div>
             `;
-
             return html;
         }
 
+        // Create Exam Questions HTML
         function createExamQuestionsHTML(examQuestions) {
             let html = `
-                <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border-radius: 20px; padding: 2rem;">
-                    <h2 style="color: white; text-align: center; margin-bottom: 2rem;">
-                        <i class="fas fa-trophy" style="color: #95e1d3;"></i> Exam Booster Questions
+                <div style="background: var(--glass); backdrop-filter: blur(12px); border-radius: 20px; padding: 2.5rem;">
+                    <h2 class="text-center" style="color: white; margin-bottom: 2rem;">
+                        <i class="fas fa-trophy" style="color: #34d399;"></i> Exam Booster
                     </h2>
                     <div class="exam-questions">
             `;
@@ -1801,41 +1499,323 @@
             examQuestions.forEach((question, index) => {
                 const probability = Math.round(question.probability_score * 100);
                 html += `
-                    <div class="exam-question animate-in" style="opacity: 0; transform: translateY(30px); animation-delay: ${index * 0.1}s;">
+                    <div class="exam-question animate-in" style="opacity: 0; transform: translateY(20px);">
                         <div class="question-type-badge ${question.type}">
                             ${question.type.replace('_', ' ').toUpperCase()}
                         </div>
                         <h3 style="color: #333; margin-bottom: 1rem; padding-right: 100px;">${question.question}</h3>
                         <div class="probability-score">
-                            <span style="font-weight: 600; color: #666;">Exam Probability:</span>
+                            <span style="font-weight: 600; color: #666;">Probability:</span>
                             <div class="probability-bar">
                                 <div class="probability-fill" style="width: ${probability}%"></div>
                             </div>
                             <span style="font-weight: 600; color: ${probability > 70 ? '#ef4444' : probability > 50 ? '#f59e0b' : '#10b981'};">${probability}%</span>
                         </div>
                         <div style="margin-top: 1rem;">
-                            ${question.keywords && question.keywords.map ? question.keywords.map(keyword => `<span style="background: #e0e7ff; color: #3730a3; padding: 0.25rem 0.5rem; border-radius: 10px; font-size: 0.8rem; margin-right: 0.5rem;">${keyword}</span>`).join('') : ''}
+                            ${question.keywords ? question.keywords.map(keyword => `<span style="background: #e0e7ff; color: #3730a3; padding: 0.25rem 0.5rem; border-radius: 10px; font-size: 0.8rem; margin-right: 0.5rem;">${keyword}</span>`).join('') : ''}
                         </div>
                     </div>
                 `;
             });
 
-            html += `
-                    </div>
-                </div>
-            `;
-
+            html += `</div></div>`;
             return html;
         }
 
-        function getDifficultyColor(difficulty) {
-            switch(difficulty) {
-                case 'easy': return '#10b981';
-                case 'medium': return '#f59e0b';
-                case 'hard': return '#ef4444';
-                default: return '#6b7280';
+        // Utility Functions
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+
+        function selectAnswer(button, selectedIndex, correctIndex, explanation, questionIndex) {
+            const options = button.parentElement.querySelectorAll('.option-btn');
+            const explanationDiv = document.getElementById(`explanation-${questionIndex}`);
+            
+            options.forEach((option, index) => {
+                option.disabled = true;
+                option.style.pointerEvents = 'none';
+                if (index === correctIndex) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && index !== correctIndex) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            setTimeout(() => {
+                explanationDiv.style.display = 'block';
+                explanationDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 600);
+        }
+
+        function shuffleFlashcards() {
+            const container = document.querySelector('.flashcards-grid');
+            const cards = Array.from(container.children);
+            
+            for (let i = cards.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cards[i], cards[j]] = [cards[j], cards[i]];
+            }
+            
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                container.appendChild(card);
+            });
+        }
+
+        // YouTube Modal Functions
+        function openYouTubeModal() {
+            document.getElementById('youtubeModal').style.display = 'block';
+            document.getElementById('youtubeUrl').focus();
+        }
+
+        function closeYouTubeModal() {
+            document.getElementById('youtubeModal').style.display = 'none';
+            document.getElementById('youtubeUrl').value = '';
+            document.getElementById('videoPreview').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('youtubeModal');
+            if (event.target === modal) {
+                closeYouTubeModal();
             }
         }
+
+        async function previewVideo() {
+            const urlInput = document.getElementById('youtubeUrl');
+            const url = urlInput.value.trim();
+            
+            if (!url) return;
+            
+            try {
+                const videoId = extractVideoId(url);
+                if (!videoId) {
+                    alert('Please enter a valid YouTube URL');
+                    return;
+                }
+                
+                const response = await fetch(`/api/video-info/${videoId}`);
+                if (!response.ok) throw new Error('Failed to fetch video info');
+                
+                const videoInfo = await response.json();
+                
+                document.getElementById('videoThumbnail').src = videoInfo.thumbnail;
+                document.getElementById('videoTitle').textContent = videoInfo.title;
+                document.getElementById('videoDetails').textContent = 
+                    `${videoInfo.duration} • ${videoInfo.channel}`;
+                document.getElementById('videoPreview').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error previewing video:', error);
+            }
+        }
+
+        function extractVideoId(url) {
+            const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/;
+            const match = url.match(regex);
+            return match ? match[1] : null;
+        }
+
+        async function summarizeVideo() {
+            const url = document.getElementById('youtubeUrl').value.trim();
+            const btn = document.getElementById('summarizeBtn');
+            const originalText = btn.innerHTML;
+            
+            if (!url) {
+                alert('Please enter a YouTube URL first');
+                return;
+            }
+            
+            btn.innerHTML = '<div class="loading"></div> Analyzing...';
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('/api/summarize-youtube', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Failed to summarize video');
+                }
+                
+                const data = await response.json();
+                closeYouTubeModal();
+                displayVideoSummary(data);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`Error: ${error.message}`);
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        function displayVideoSummary(data) {
+            const resultsSection = document.getElementById('results-section');
+            window.currentVideoSummary = data.summary;
+            
+            const html = `
+                <div style="background: var(--glass); backdrop-filter: blur(12px); border-radius: 20px; padding: 2.5rem;">
+                    <h2 class="text-center" style="color: white; margin-bottom: 2rem;">
+                        <i class="fab fa-youtube" style="color: #ff0000;"></i> Video Summary
+                    </h2>
+                    <div class="video-summary-container animate-in" style="opacity: 0; transform: translateY(20px);">
+                        <div class="video-header">
+                            <img src="${data.thumbnail}" alt="Video thumbnail" class="video-thumbnail-large" onerror="this.src='https://img.youtube.com/vi/${data.video_id}/maxresdefault.jpg'">
+                            <div class="video-details">
+                                <h3>${data.title.replace(/'/g, "\\'").replace(/"/g, '"')}</h3>
+                                <div class="video-meta">
+                                    <span class="video-badge">${data.duration || 'Unknown Duration'}</span>
+                                    <span class="video-badge">${data.source === 'transcript' ? 'Transcript' : 'Audio Analysis'}</span>
+                                </div>
+                                <p style="color: #64748b; line-height: 1.6;">
+                                    AI-generated summary from ${data.source === 'transcript' ? 'official transcript' : 'audio transcription'}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="summary-content">
+                            <h4><i class="fas fa-file-alt"></i> Summary</h4>
+                            <div style="line-height: 1.8; color: var(--dark);">
+                                ${data.summary.replace(/\n/g, '<br><br>').replace(/'/g, "\\'").replace(/"/g, '"')}
+                            </div>
+                        </div>
+                        <div style="margin-top: 3rem; background: rgba(91, 33, 182, 0.05); border-radius: 20px; padding: 2rem;">
+                            <h4 class="text-center" style="color: var(--primary); margin-bottom: 2rem;">
+                                <i class="fas fa-graduation-cap"></i> Generate Study Materials
+                            </h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                                <button class="btn study-tool-btn" style="background: #f87171; color: white;" onclick="generateFromVideoSummary('flashcards')">
+                                    <i class="fas fa-brain"></i> Flashcards
+                                </button>
+                                <button class="btn study-tool-btn" style="background: #2dd4bf; color: white;" onclick="generateFromVideoSummary('mcqs')">
+                                    <i class="fas fa-question-circle"></i> Quiz
+                                </button>
+                                <button class="btn study-tool-btn" style="background: #facc15; color: #333;" onclick="generateFromVideoSummary('mindmap')">
+                                    <i class="fas fa-project-diagram"></i> Mind Map
+                                </button>
+                                <button class="btn study-tool-btn" style="background: #a78bfa; color: white;" onclick="generateFromVideoSummary('learning-path')">
+                                    <i class="fas fa-route"></i> Learning Path
+                                </button>
+                                <button class="btn study-tool-btn" style="background: #fb7185; color: white;" onclick="generateFromVideoSummary('sticky-notes')">
+                                    <i class="fas fa-sticky-note"></i> Sticky Notes
+                                </button>
+                                <button class="btn study-tool-btn" style="background: #34d399; color: white;" onclick="generateFromVideoSummary('exam-questions')">
+                                    <i class="fas fa-trophy"></i> Exam Booster
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            resultsSection.innerHTML = html;
+            resultsSection.style.display = 'block';
+            
+            setTimeout(() => {
+                const container = resultsSection.querySelector('.animate-in');
+                if (container) {
+                    container.style.opacity = '1';
+                    container.style.transform = 'translateY(0)';
+                }
+            }, 100);
+            
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function generateFromVideoSummary(type) {
+            try {
+                const summary = window.currentVideoSummary;
+                if (!summary) {
+                    alert('No video summary available.');
+                    return;
+                }
+                
+                showLoading(type);
+                
+                const buttons = document.querySelectorAll('.study-tool-btn');
+                buttons.forEach(btn => {
+                    btn.disabled = true;
+                    btn.style.opacity = '0.6';
+                });
+                
+                await generateContentFromText(type, summary);
+                
+                buttons.forEach(btn => {
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                });
+                
+            } catch (error) {
+                console.error('Error generating from video summary:', error);
+                alert('Error generating study materials.');
+                hideLoading();
+                
+                const buttons = document.querySelectorAll('.study-tool-btn');
+                buttons.forEach(btn => {
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                });
+            }
+        }
+
+        async function generateContentFromText(type, text) {
+            try {
+                const formData = new FormData();
+                formData.append('text', text);
+
+                const response = await fetch(`/api/generate-${type}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                displayResults(type, data);
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`Error generating ${type}.`);
+                hideLoading();
+            }
+        }
+
+        function getDifficultyColor(difficulty) {
+            return {
+                easy: '#34d399',
+                medium: '#f59e0b',
+                hard: '#f87171'
+            }[difficulty] || '#6b7280';
+        }
+
+        function expandSticky(sticky) {
+            if (sticky.style.transform.includes('scale(1.2)')) {
+                sticky.style.transform = sticky.style.transform.replace('scale(1.2)', '');
+                sticky.style.zIndex = '1';
+            } else {
+                sticky.style.transform += ' scale(1.2)';
+                sticky.style.zIndex = '20';
+            }
+        }
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.feature-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
     </script>
 </body>
 </html>
