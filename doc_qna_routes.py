@@ -42,7 +42,7 @@ from function_for_DOC_QNA import (
 load_dotenv()
 
 # Configure API keys
-gemini_api_key = os.getenv('GEMINI_API_KEY', 'AIzaSyAw3da5CvTyyZF0LFaLAeFj6h0_TM5jcCM')
+gemini_api_key = os.getenv('GEMINI_API_KEY', 'Your_Gemini_API_Key')  # 🔁 Replace with your actual API key
 genai.configure(api_key=gemini_api_key)
 
 # Initialize LLM

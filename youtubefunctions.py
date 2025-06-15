@@ -5,7 +5,7 @@ import google.generativeai as genai
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled
 
 # Set up Gemini API
-GOOGLE_API_KEY = "AIzaSyAw3da5CvTyyZF0LFaLAeFj6h0_TM5jcCM"  # 🔁 Replace with your actual API key
+GOOGLE_API_KEY = "Your API Key"  # 🔁 Replace with your actual API key
 genai.configure(api_key=GOOGLE_API_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
 
