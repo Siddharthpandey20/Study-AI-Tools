@@ -14,7 +14,7 @@ import os
 
 # Configure Gemini API with error handling
 try:
-    api_key = os.getenv("GEMINI_API_KEY", "Your_Gemini_API_Key_Here")
+    api_key = os.getenv("GEMINI_API_KEY", "AIzaSyAw3da5CvTyyZF0LFaLAeFj6h0_TM5jcCM")
     genai.configure(api_key=api_key)
     model = genai.GenerativeModel('gemini-1.5-flash')
     AI_AVAILABLE = True
